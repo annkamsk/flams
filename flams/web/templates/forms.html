@@ -1,0 +1,14 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% macro display_field(field) -%}
+<div class="form-group">
+    {{ wtf.form_field(field) }}
+    {% if field.errors %}
+    <ul class="errors text-danger">
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{%- endmacro %}

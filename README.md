@@ -56,3 +56,10 @@ Manual: http://biopython.org/DIST/docs/tutorial/Tutorial.html#sec125
 ## Parsing PLM database format
 Go to `read_plm.py`, change `PLM_DATABASE` to path of database, and `OUTPUT` to output path. Then run:
 `python read_plm.py`
+
+## Running Flask server locally
+Pre-step: make sure to run `pip install -r requirements.txt` to install flask!
+
+`python -m flams.web.app`
+
+Open: `http://127.0.0.1:5000/` in your browser.

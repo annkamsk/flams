@@ -1,0 +1,70 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% import "forms.html" as forms %}
+
+{% block styles %}
+{{ super() }}
+<style>
+    body {
+        background: #e8f1f9;
+    }
+</style>
+{% endblock %}
+
+
+{% block title %}
+FLAMS
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+
+            <h1 class="pt-5 pb-2">FLAMS</h1>
+
+            <p class="lead">This is the main page of Find Lysine Acetylation Modification Site app</p>
+
+            <form class="form form-horizontal" method="post" role="form">
+                {{ form.hidden_tag() }}
+                {{ wtf.form_errors(form, hiddens="only") }}
+
+                {{ forms.display_field(form.fasta_file) }}
+                {{ forms.display_field(form.modifications) }}
+
+                <div class="form-row">
+                    <div class="col">
+                        {{ wtf.form_field(form.position) }}
+                        {% if form.position.errors %}
+                        <ul class="errors">
+                            {% for error in form.position.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {{ wtf.form_field(form.range) }}
+                        {% if form.range.errors %}
+                        <ul class="errors">
+                            {% for error in form.range.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {{ wtf.form_field(form.submit) }}
+            </form>
+
+            <p class="pt-5"><strong>{{ message }}</strong></p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
