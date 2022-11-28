@@ -1,9 +1,9 @@
 from pathlib import Path
 import subprocess
-import os
+
 from typing import List
-from flams.modifications import MODIFICATIONS, ModificationType
 from flams.utils import get_data_dir
+from flams.modifications import MODIFICATIONS, ModificationType
 
 
 def update_db_for_modifications(list_of_mods_to_check: List[str]):
@@ -11,8 +11,6 @@ def update_db_for_modifications(list_of_mods_to_check: List[str]):
         _generate_blastdb_if_not_up_to_date(MODIFICATIONS[m])
 
 
-# Check if data dir contains a BLASTDB with name {modification}-{version}
-# If not, download FASTAs and generate BLASTDB.
 def _generate_blastdb_if_not_up_to_date(modification: ModificationType):
     data_dir = get_data_dir()
 
@@ -24,12 +22,10 @@ def _generate_blastdb_if_not_up_to_date(modification: ModificationType):
     if Path(f"{data_dir}/{BLASTDB_PATH}.pdb").exists():
         return
 
-    fasta_location = f"{data_dir}/{modification.type}.fasta"
+    fasta_location = f"{data_dir}/{modification.type}-{modification.version}.fasta"
 
-    if os.path.exists(fasta_location):
-        os.remove(fasta_location)
-
-    _get_fasta_from_dbs(modification, fasta_location)
+    if not Path(fasta_location).exists():
+        _get_fasta_from_dbs(modification, fasta_location)
 
     # Generate local BLASTDB from FASTA in fasta_location
     _generate_blastdb(data_dir, modification)
