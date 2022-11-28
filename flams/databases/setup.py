@@ -1,45 +1,9 @@
 from pathlib import Path
 import subprocess
-from typing import Any, List
-from flams.databases import cplmv4
+
+from typing import List
 from flams.utils import get_data_dir
-from dataclasses import dataclass
-
-
-@dataclass
-class ModificationDatabase:
-    module: Any
-    descriptor: str
-
-
-@dataclass
-class ModificationType:
-    type: str
-    version: float
-    dbs: List[ModificationDatabase]
-
-
-# Here we store a dict of modifications that can be queried for.
-# Each modification has a dbs and version attribute.
-# Dbs is a list of tuples (module, label) where module is used to get a FASTA of the modifications using label
-# TODO Add more modifications from CPLM
-MODIFICATIONS = {
-    "acetylation": ModificationType(
-        "acetylation", 1.0, [ModificationDatabase(cplmv4, "Acetylation")]
-    ),
-    "lactylation": ModificationType(
-        "lactylation", 1.0, [ModificationDatabase(cplmv4, "Lactylation")]
-    ),
-    "formylation": ModificationType(
-        "formulation", 1.0, [ModificationDatabase(cplmv4, "Formylation")]
-    ),
-    "succinylation": ModificationType(
-        "succinylation", 1.0, [ModificationDatabase(cplmv4, "Succinylation")]
-    ),
-    "hmgylation": ModificationType(
-        "hmgylation", 1.0, [ModificationDatabase(cplmv4, "HMGylation")]
-    ),
-}
+from flams.modifications import MODIFICATIONS, ModificationType
 
 
 def update_db_for_modifications(list_of_mods_to_check: List[str]):
