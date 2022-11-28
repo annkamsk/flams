@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 from Bio import SeqIO
-from flams.databases import setup as db_setup
+from flams.modifications import MODIFICATIONS
 
 
 def parse_args(sys_args):
@@ -108,7 +108,7 @@ def is_position_lysine(position: int, input: Path) -> bool:
 def check_modifications(args, parser):
     if args.modification:
         for i in args.modification:
-            if i not in db_setup.MODIFICATIONS:
+            if MODIFICATIONS.get(i) is None:
                 parser.error(f"Invalid modification type {i}")
 
 
